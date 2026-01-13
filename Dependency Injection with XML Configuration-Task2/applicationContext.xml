@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <context:property-placeholder location="classpath:application.properties"/>
+
+
+    <!-- Define your beans here -->
+
+    <bean id="init-method" class="System.DatabaseOperator" init-method="connectToDatabase">
+
+    </bean>
+    <bean id="destroy-method" class="System.DatabaseOperator" destroy-method="disconnectFromDatabase">
+
+    </bean>
+
+    <bean id="database" class="System.DatabaseOperator">
+         <property name="url" value="${database.url}"/>
+       <property name="username" value="${database.username}"/>
+       <property name="password" value="${database.password}"/>
+
+   </bean>
+
+    <bean id="car" class="System.Car">
+        <constructor-arg ref="database"/>
+
+    </bean>
+    <bean id="plane" class="System.Plane">
+        <property name="database" ref="database"/>
+    </bean>
+
+</beans>
+
+
+
+
+
